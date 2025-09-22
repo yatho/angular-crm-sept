@@ -1,0 +1,37 @@
+<div class="login-form-container">
+  <form id="login-form" [formGroup]="loginForm" (submit)="submit()">
+    <p>
+      <label for="login">Identifiant</label>
+      <input id="login" type="text" formControlName="login" />
+      @if (
+        (loginForm.controls.login.touched || loginForm.controls.login.dirty) &&
+        loginForm.controls.login.errors
+      ) {
+        <span class="help-block">
+          @if (loginForm.controls.login.errors['required']) {
+            <span> Enter your login </span>
+          } @else if (loginForm.controls.login.errors['minlength']) {
+            <span> The login must have a minimum of 3 characters. </span>
+          }
+        </span>
+      }
+    </p>
+    <p>
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" formControlName="password" />
+      @if (
+        (loginForm.controls.password.touched || loginForm.controls.password.dirty) &&
+        loginForm.controls.password.errors
+      ) {
+        <span class="help-block">
+          @if (loginForm.controls.password.errors['required']) {
+            <span> Enter your password </span>
+          } @else if (loginForm.controls.password.errors['checkPassword']) {
+            <span> The password must have a minimum of 5 characters. </span>
+          }
+        </span>
+      }
+    </p>
+    <button type="submit">Log in</button>
+  </form>
+</div>
