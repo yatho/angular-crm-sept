@@ -1,14 +1,21 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Login } from './login/login';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { Dummy } from './dummy/dummy';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'crm-root',
-  imports: [RouterOutlet, Login, MatToolbar, MatIconButton, MatIcon, Dummy],
+  imports: [
+    RouterOutlet,
+    MatToolbar,
+    MatIconButton,
+    MatIcon,
+    MatTooltip,
+    RouterLink,
+    RouterLinkActive,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

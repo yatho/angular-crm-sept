@@ -48,7 +48,7 @@ body {
 :root {
   @include mat.toolbar-overrides(
     (
-      container-background-color: orange,
+      container-background-color: lightGrey,
       standard-height: 40px,
     )
   );

@@ -11,6 +11,7 @@ import { MatButton } from '@angular/material/button';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormError } from '../form-error/form-error';
 import { Authentication } from '../authentication';
+import { Router } from '@angular/router';
 
 function checkPassword(c: AbstractControl): ValidationErrors | null {
   if (c.value.length < 5) {
@@ -29,6 +30,8 @@ function checkPassword(c: AbstractControl): ValidationErrors | null {
 })
 export class Login {
   private authenticationService = inject(Authentication);
+  private router = inject(Router);
+
   protected loginForm = new FormGroup({
     login: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)],
@@ -44,5 +47,6 @@ export class Login {
     const { login, password } = this.loginForm.getRawValue();
     const user = this.authenticationService.authentUser(login, password);
     console.log(user, 'From service');
+    this.router.navigateByUrl('/home');
   }
 }
