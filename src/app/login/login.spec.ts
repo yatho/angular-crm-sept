@@ -87,7 +87,7 @@ describe('Login', () => {
     // Final state testing
     const loginError = getLoginError(fixture);
     const passwordError = getPasswordError(fixture);
-    console.log(loginError);
+
     expect(loginError.textContent).toContain('Le login doit avoir un minimum de 3 caractères.');
     expect(passwordError.textContent).toContain(
       'Le password doit contenir un minimum de 5 caractères.',
