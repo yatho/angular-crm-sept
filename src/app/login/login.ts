@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -10,6 +10,7 @@ import {
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormError } from '../form-error/form-error';
+import { Authentication } from '../authentication';
 
 function checkPassword(c: AbstractControl): ValidationErrors | null {
   if (c.value.length < 5) {
@@ -27,14 +28,21 @@ function checkPassword(c: AbstractControl): ValidationErrors | null {
   styleUrl: './login.scss',
 })
 export class Login {
+  private authenticationService = inject(Authentication);
   protected loginForm = new FormGroup({
-    login: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    login: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(3)],
+      nonNullable: true,
+    }),
     password: new FormControl('', {
       validators: [Validators.required, checkPassword],
+      nonNullable: true,
     }),
   });
 
   protected submit() {
-    console.log(this.loginForm.controls.password.errors);
+    const { login, password } = this.loginForm.getRawValue();
+    const user = this.authenticationService.authentUser(login, password);
+    console.log(user, 'From service');
   }
 }
