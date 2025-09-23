@@ -1,40 +1,34 @@
 <div class="login-form-container">
   <form id="login-form" [formGroup]="loginForm" (submit)="submit()">
-    <mat-form-field class="example-full-width">
-      <mat-label>Email</mat-label>
-      <input matInput id="login" name="login" type="text" formControlName="login" />
-      @if (
-        (loginForm.controls.login.touched || loginForm.controls.login.dirty) &&
-        loginForm.controls.login.errors?.['required']
-      ) {
-        <mat-error>Enter your login</mat-error>
-      } @else if (
-        (loginForm.controls.login.touched || loginForm.controls.login.dirty) &&
-        loginForm.controls.login.errors?.['minlength']
-      ) {
-        <mat-error test-id="minLengthLogin">
-          The login must have a minimum of 3 characters.</mat-error
-        >
-      }
-    </mat-form-field>
+    <p>
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput id="login" name="login" type="text" formControlName="login" />
+      </mat-form-field>
+      <crm-form-error
+        test-id="loginError"
+        [field]="loginForm.controls.login"
+        [errorMessages]="{
+          required: 'Entrez votre login',
+          minlength: 'Le login doit avoir un minimum de 3 caractères.',
+        }"
+      />
+    </p>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Password</mat-label>
-      <input matInput id="password" name="password" type="password" formControlName="password" />
-      @if (
-        (loginForm.controls.password.touched || loginForm.controls.password.dirty) &&
-        loginForm.controls.password.errors?.['required']
-      ) {
-        <mat-error test-id="requiredPassword">Enter your password</mat-error>
-      } @else if (
-        (loginForm.controls.password.touched || loginForm.controls.password.dirty) &&
-        loginForm.controls.password.errors?.['checkPassword']
-      ) {
-        <mat-error test-id="minLengthPassword"
-          >The password must have a minimum of 5 characters.</mat-error
-        >
-      }
-    </mat-form-field>
+    <p>
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput id="password" name="password" type="password" formControlName="password" />
+      </mat-form-field>
+      <crm-form-error
+        test-id="passwordError"
+        [field]="loginForm.controls.password"
+        [errorMessages]="{
+          required: 'Entrez votre mot de passe',
+          checkPassword: 'Le password doit contenir un minimum de 5 caractères.',
+        }"
+      />
+    </p>
 
     <button mat-button type="submit" [disabled]="loginForm.invalid" color="primary">
       Validate

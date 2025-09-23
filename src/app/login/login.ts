@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { FormError } from '../form-error/form-error';
 
 function checkPassword(c: AbstractControl): ValidationErrors | null {
   if (c.value.length < 5) {
@@ -21,7 +22,7 @@ function checkPassword(c: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'crm-login',
-  imports: [ReactiveFormsModule, MatInput, MatLabel, MatFormField, MatError, MatButton],
+  imports: [ReactiveFormsModule, MatInput, MatLabel, MatFormField, MatError, MatButton, FormError],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

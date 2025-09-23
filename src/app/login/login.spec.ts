@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Login } from './login';
-import { By } from '@angular/platform-browser';
 
 const getSubmitButton = (fixture: ComponentFixture<Login>) => {
   return fixture.nativeElement.querySelector('button[type="submit"]');
@@ -13,10 +12,10 @@ const getPasswordField = (fixture: ComponentFixture<Login>) => {
   return fixture.nativeElement.querySelector('input[name="password"]');
 };
 const getLoginError = (fixture: ComponentFixture<Login>) => {
-  return fixture.nativeElement.querySelector('[test-id="minLengthLogin"]');
+  return fixture.nativeElement.querySelector('[test-id="loginError"]');
 };
 const getPasswordError = (fixture: ComponentFixture<Login>) => {
-  return fixture.nativeElement.querySelector('[test-id="minLengthPassword"]');
+  return fixture.nativeElement.querySelector('[test-id="passwordError"]');
 };
 
 describe('Login', () => {
@@ -89,9 +88,9 @@ describe('Login', () => {
     const loginError = getLoginError(fixture);
     const passwordError = getPasswordError(fixture);
     console.log(loginError);
-    expect(loginError.textContent).toContain('The login must have a minimum of 3 characters.');
+    expect(loginError.textContent).toContain('Le login doit avoir un minimum de 3 caractères.');
     expect(passwordError.textContent).toContain(
-      'The password must have a minimum of 5 characters.',
+      'Le password doit contenir un minimum de 5 caractères.',
     );
     expect(button.disabled).toBeTruthy();
   });
