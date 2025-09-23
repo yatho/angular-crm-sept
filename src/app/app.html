@@ -1,4 +1,14 @@
-<h1>Hello, {{ title() }}</h1>
+<mat-toolbar>
+  <h1>{{ title() }}</h1>
+  <span class="example-spacer"></span>
+  <button
+    matIconButton
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    <mat-icon>favorite</mat-icon>
+  </button>
+</mat-toolbar>
 
 <router-outlet />
 

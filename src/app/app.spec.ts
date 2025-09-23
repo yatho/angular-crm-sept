@@ -18,6 +18,6 @@ describe('App', () => {
 
   it('should render title', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angular-crm');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Angular-crm');
   });
 });

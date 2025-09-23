@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Login } from './login';
+import { By } from '@angular/platform-browser';
 
 const getSubmitButton = (fixture: ComponentFixture<Login>) => {
   return fixture.nativeElement.querySelector('button[type="submit"]');
@@ -12,10 +13,10 @@ const getPasswordField = (fixture: ComponentFixture<Login>) => {
   return fixture.nativeElement.querySelector('input[name="password"]');
 };
 const getLoginError = (fixture: ComponentFixture<Login>) => {
-  return fixture.nativeElement.querySelector('[name="login"] + span.help-block');
+  return fixture.nativeElement.querySelector('[test-id="minLengthLogin"]');
 };
 const getPasswordError = (fixture: ComponentFixture<Login>) => {
-  return fixture.nativeElement.querySelector('[name="password"] + span.help-block');
+  return fixture.nativeElement.querySelector('[test-id="minLengthPassword"]');
 };
 
 describe('Login', () => {
@@ -80,11 +81,14 @@ describe('Login', () => {
     passwordField.value = 'pa';
     loginField.dispatchEvent(new Event('input'));
     passwordField.dispatchEvent(new Event('input'));
+    loginField.dispatchEvent(new Event('blur'));
+    passwordField.dispatchEvent(new Event('blur'));
     fixture.detectChanges();
 
     // Final state testing
     const loginError = getLoginError(fixture);
     const passwordError = getPasswordError(fixture);
+    console.log(loginError);
     expect(loginError.textContent).toContain('The login must have a minimum of 3 characters.');
     expect(passwordError.textContent).toContain(
       'The password must have a minimum of 5 characters.',
