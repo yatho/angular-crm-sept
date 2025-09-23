@@ -12,6 +12,8 @@ import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormError } from '../form-error/form-error';
 import { Authentication } from './authentication';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError } from 'rxjs';
 
 function checkPassword(c: AbstractControl): ValidationErrors | null {
   if (c.value.length < 5) {
@@ -31,6 +33,7 @@ function checkPassword(c: AbstractControl): ValidationErrors | null {
 export class Login {
   private authenticationService: Authentication;
   private router: Router;
+  private snackBar = inject(MatSnackBar);
 
   constructor() {
     this.authenticationService = inject(Authentication);
@@ -54,8 +57,16 @@ export class Login {
 
   protected submit() {
     const { login, password } = this.loginForm.getRawValue();
-    const user = this.authenticationService.authentUser(login, password);
-    console.log(user, 'From service');
-    this.router.navigateByUrl('/home');
+    this.authenticationService
+      .authentUser(login, password)
+      .pipe(
+        catchError((err) => {
+          this.snackBar.open('Authentification en erreur, merci de réessayer', undefined, {
+            duration: 3000,
+          });
+          return [];
+        }),
+      )
+      .subscribe((user) => this.router.navigateByUrl('/home'));
   }
 }
