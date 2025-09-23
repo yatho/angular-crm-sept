@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Login } from './login/login';
 import { Home } from './home/home';
+import { authenticationGuard } from './login/authentication-guard';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: Home,
+    canActivate: [authenticationGuard],
   },
   {
     path: 'home/:name',

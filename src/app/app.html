@@ -2,19 +2,22 @@
   <h1>{{ title() }}</h1>
   <span class="example-spacer"></span>
   <span>
-    <a matIconButton matTooltip="Home" routerLink="/home" routerLinkActive="is-active">
-      <mat-icon>home</mat-icon>
-    </a>
-  </span>
-  <span>
     <a matIconButton matTooltip="Login" routerLink="/login" routerLinkActive="is-active">
       <mat-icon>person</mat-icon>
     </a>
   </span>
+  @if (authent.authenticated) {
+    <span>
+      <a matIconButton matTooltip="Home" routerLink="/home" routerLinkActive="is-active">
+        <mat-icon>home</mat-icon>
+      </a>
+    </span>
+    <span>
+      <a matIconButton matTooltip="Logout" (click)="disconnect()">
+        <mat-icon>logout</mat-icon>
+      </a>
+    </span>
+  }
 </mat-toolbar>
 
 <router-outlet />
-
-<!-- <crm-login /> -->
-
-<!-- <crm-dummy [label]="title()" (clicked)="display($event)" /> -->

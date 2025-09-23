@@ -10,7 +10,7 @@ import {
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormError } from '../form-error/form-error';
-import { Authentication } from '../authentication';
+import { Authentication } from './authentication';
 import { Router } from '@angular/router';
 
 function checkPassword(c: AbstractControl): ValidationErrors | null {
@@ -29,8 +29,17 @@ function checkPassword(c: AbstractControl): ValidationErrors | null {
   styleUrl: './login.scss',
 })
 export class Login {
-  private authenticationService = inject(Authentication);
-  private router = inject(Router);
+  private authenticationService: Authentication;
+  private router: Router;
+
+  constructor() {
+    this.authenticationService = inject(Authentication);
+    this.router = inject(Router);
+
+    if (this.authenticationService.authenticated) {
+      this.authenticationService.disconnect();
+    }
+  }
 
   protected loginForm = new FormGroup({
     login: new FormControl('', {
