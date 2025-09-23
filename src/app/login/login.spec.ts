@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Login } from './login';
+import { provideHttpClient } from '@angular/common/http';
 
 const getSubmitButton = (fixture: ComponentFixture<Login>) => {
   return fixture.nativeElement.querySelector('button[type="submit"]');
@@ -25,6 +26,7 @@ describe('Login', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Login],
+      providers: [provideHttpClient()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Login);
