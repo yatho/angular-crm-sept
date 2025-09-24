@@ -1,0 +1,69 @@
+<div class="container">
+  <h1>Consommateurs</h1>
+  <div>
+    <mat-form-field>
+      <mat-label for="login">Filtre</mat-label>
+      <input (ngModelChange)="find($event)" [ngModel]="search()" id="filter" matInput />
+    </mat-form-field>
+    <span>
+      <a
+        test-id="createButton"
+        [routerLink]="'/consumer-fiche'"
+        color="primary"
+        mat-icon-button
+        matTooltip="Créer"
+      >
+        <mat-icon>person_add</mat-icon>
+      </a>
+    </span>
+  </div>
+  <div class="table-container">
+    <table [dataSource]="consumers()" class="mat-elevation-z8" mat-table>
+      <!-- civility Column -->
+      <ng-container matColumnDef="civility">
+        <th *matHeaderCellDef mat-header-cell>Civilité</th>
+        <td *matCellDef="let element" mat-cell>{{ element.civility }}</td>
+      </ng-container>
+
+      <!-- firstname Column -->
+      <ng-container matColumnDef="firstname">
+        <th *matHeaderCellDef mat-header-cell>Prénom</th>
+        <td *matCellDef="let element" mat-cell>{{ element.firstname }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="lastname">
+        <th *matHeaderCellDef mat-header-cell>Nom</th>
+        <td *matCellDef="let element" mat-cell>{{ element.lastname }}</td>
+      </ng-container>
+
+      <!-- email Column -->
+      <ng-container matColumnDef="email">
+        <th *matHeaderCellDef mat-header-cell>email</th>
+        <td *matCellDef="let element" mat-cell>{{ element.email }}</td>
+      </ng-container>
+
+      <!-- email Column -->
+      <ng-container matColumnDef="phone">
+        <th *matHeaderCellDef mat-header-cell>Téléphone</th>
+        <td *matCellDef="let element" mat-cell>{{ element.phone | phone }}</td>
+      </ng-container>
+
+      <!-- actions Column -->
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell>Actions</th>
+        <td *matCellDef="let element" mat-cell>
+          <button (click)="edit(element)" color="primary" mat-icon-button matTooltip="Editer">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="delete(element)" color="warn" mat-icon-button matTooltip="Supprimer">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+    </table>
+  </div>
+</div>

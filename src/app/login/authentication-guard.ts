@@ -3,6 +3,6 @@ import { Authentication } from './authentication';
 import { inject } from '@angular/core';
 
 export const authenticationGuard: CanActivateFn = () => {
-  if (inject(Authentication).authenticated) return true;
+  if (inject(Authentication).authenticated()) return true;
   return inject(Router).parseUrl('/login');
 };

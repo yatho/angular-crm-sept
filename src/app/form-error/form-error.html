@@ -1,6 +1,6 @@
 @if (isError()) {
   <mat-error class="help-block">
-    @for (msg of errors; track msg) {
+    @for (msg of errors(); track msg) {
       {{ msg }}
     }
   </mat-error>

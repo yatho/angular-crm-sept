@@ -1,15 +1,21 @@
+@let userTpl = user();
 <mat-toolbar>
-  <h1>{{ title() }}</h1>
+  <h1>{{ title() }} {{ userTpl?.firstname }} {{ userTpl?.lastname }}</h1>
   <span class="example-spacer"></span>
-  <span>
+  <!-- <span>
     <a matIconButton matTooltip="Login" routerLink="/login" routerLinkActive="is-active">
       <mat-icon>person</mat-icon>
     </a>
-  </span>
-  @if (authent.authenticated) {
+  </span> -->
+  @if (authent.authenticated()) {
     <span>
       <a matIconButton matTooltip="Home" routerLink="/home" routerLinkActive="is-active">
         <mat-icon>home</mat-icon>
+      </a>
+    </span>
+    <span>
+      <a [routerLinkActive]="'is-active'" routerLink="/consumer" matIconButton matTooltip="Clients">
+        <mat-icon>list</mat-icon>
       </a>
     </span>
     <span>
@@ -19,10 +25,6 @@
     </span>
   }
 </mat-toolbar>
-
-<div>
-  {{ '0102030405' | phone }}
-</div>
 
 <main>
   <router-outlet />

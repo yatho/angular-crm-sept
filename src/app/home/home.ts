@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DemoObservable } from '../common/demo-observable';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -6,6 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'crm-home',
   templateUrl: './home.html',
   styleUrl: './home.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Home {
   protected demoObs = inject(DemoObservable).getObservable().pipe(takeUntilDestroyed());

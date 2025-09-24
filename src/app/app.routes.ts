@@ -1,22 +1,32 @@
 import { Routes } from '@angular/router';
-import { Login } from './login/login';
-import { Home } from './home/home';
 import { authenticationGuard } from './login/authentication-guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
+    canActivate: [authenticationGuard],
+    children: [
+      {
+        path: 'home',
+        loadComponent: () => import('./home/home').then((m) => m.Home),
+      },
+      {
+        path: 'consumer',
+        loadComponent: () => import('./consumers/list/list').then((m) => m.List),
+      },
+      {
+        path: 'consumer-fiche',
+        loadComponent: () => import('./consumers/fiche/fiche').then((m) => m.Fiche),
+      },
+      {
+        path: 'consumer-fiche/:id',
+        loadComponent: () => import('./consumers/fiche/fiche').then((m) => m.Fiche),
+      },
+    ],
   },
   {
     path: 'login',
-    component: Login,
-  },
-  {
-    path: 'home',
-    component: Home,
-    canActivate: [authenticationGuard],
+    loadComponent: () => import('./login/login').then((m) => m.Login),
   },
   {
     path: '**',

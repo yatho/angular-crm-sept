@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -29,6 +29,7 @@ function checkPassword(c: AbstractControl): ValidationErrors | null {
   imports: [ReactiveFormsModule, MatInput, MatLabel, MatFormField, MatButton, FormError],
   templateUrl: './login.html',
   styleUrl: './login.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Login {
   private authenticationService: Authentication;
@@ -39,7 +40,7 @@ export class Login {
     this.authenticationService = inject(Authentication);
     this.router = inject(Router);
 
-    if (this.authenticationService.authenticated) {
+    if (this.authenticationService.authenticated()) {
       this.authenticationService.disconnect();
     }
   }

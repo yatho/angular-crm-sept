@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { User } from './model/user';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -15,24 +15,29 @@ type AuthentResponse = {
   providedIn: 'root',
 })
 export class Authentication {
-  private currentUser?: User;
-  private jwtToken?: string;
+  private currentUser: WritableSignal<User | undefined> = signal(undefined);
+  private jwtToken: WritableSignal<string | undefined> = signal(undefined);
+  private _authenticated: Signal<boolean> = computed(() => !!this.currentUser());
   private http = inject(HttpClient);
 
   constructor() {
     // Check user connected?
-    if (sessionStorage.getItem(USER_STORAGE_KEY) !== null) {
-      this.currentUser = JSON.parse(sessionStorage.getItem(USER_STORAGE_KEY)!);
-      this.jwtToken = sessionStorage.getItem(TOKEN_STORAGE_KEY)!;
+    if (sessionStorage.getItem(USER_STORAGE_KEY)) {
+      this.currentUser.set(JSON.parse(sessionStorage.getItem(USER_STORAGE_KEY)!));
+      this.jwtToken.set(sessionStorage.getItem(TOKEN_STORAGE_KEY)!);
     }
   }
 
-  get authenticated() {
-    return !!this.currentUser;
+  get user() {
+    return this.currentUser.asReadonly();
   }
 
-  public get token(): string | undefined {
-    return this.jwtToken;
+  get authenticated() {
+    return this._authenticated;
+  }
+
+  public get token(): Signal<string | undefined> {
+    return this.jwtToken.asReadonly();
   }
 
   authentUser(login: string, password: string): Observable<User> {
@@ -43,17 +48,17 @@ export class Authentication {
       })
       .pipe(
         map((result) => {
-          this.currentUser = result.user;
-          this.jwtToken = result.token;
-          sessionStorage.setItem(USER_STORAGE_KEY, JSON.stringify(this.currentUser));
-          sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(this.jwtToken));
-          return this.currentUser;
+          this.currentUser.set(result.user);
+          this.jwtToken.set(result.token);
+          sessionStorage.setItem(USER_STORAGE_KEY, JSON.stringify(this.currentUser()));
+          sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(this.jwtToken()));
+          return this.currentUser()!;
         }),
       );
   }
 
   disconnect(): void {
-    delete this.currentUser;
+    this.currentUser.set(undefined);
     sessionStorage.removeItem(USER_STORAGE_KEY);
     sessionStorage.removeItem(TOKEN_STORAGE_KEY);
   }

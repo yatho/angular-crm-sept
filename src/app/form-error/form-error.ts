@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, input, Signal } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatError } from '@angular/material/input';
 
@@ -9,19 +9,21 @@ import { MatError } from '@angular/material/input';
   styleUrl: './form-error.scss',
 })
 export class FormError {
-  @Input()
-  field?: AbstractControl;
+  public readonly field = input<AbstractControl>();
 
-  @Input()
-  errorMessages?: { [key: string]: string };
+  public readonly errorMessages = input<{
+    [key: string]: string;
+  }>();
 
-  isError(): boolean {
-    return !!this.field && this.field.touched && this.field.invalid;
-  }
+  protected readonly errors: Signal<string[]> = computed(() =>
+    Object.keys(this.field()?.errors as object).map((key) => {
+      const errorMessages = this.errorMessages();
+      return errorMessages?.[key] ? errorMessages?.[key] : `Missing message for ${key}`;
+    }),
+  );
 
-  get errors(): string[] {
-    return Object.keys(this.field?.errors as object).map((key) => {
-      return this.errorMessages?.[key] ? this.errorMessages?.[key] : `Missing message for ${key}`;
-    });
+  protected isError(): boolean {
+    const field = this.field();
+    return !!field && field.touched && field.invalid;
   }
 }
