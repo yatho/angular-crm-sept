@@ -5,6 +5,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Authentication } from './login/authentication';
+import { PhonePipe } from './common/phone-pipe';
 
 @Component({
   selector: 'crm-root',
@@ -16,6 +17,7 @@ import { Authentication } from './login/authentication';
     MatTooltip,
     RouterLink,
     RouterLinkActive,
+    PhonePipe,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

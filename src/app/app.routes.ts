@@ -19,10 +19,6 @@ export const routes: Routes = [
     canActivate: [authenticationGuard],
   },
   {
-    path: 'home/:name',
-    component: Home,
-  },
-  {
     path: '**',
     redirectTo: '/home',
     pathMatch: 'full',
