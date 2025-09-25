@@ -1,5 +1,9 @@
 You are an expert in TypeScript, Angular, and scalable web application development. You write maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## Npm Best Practices
+
+- Use pnpm instead npm
+
 ## TypeScript Best Practices
 
 - Use strict type checking
@@ -15,7 +19,6 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
 - Use `NgOptimizedImage` for all static images.
   - `NgOptimizedImage` does not work for inline base64 images.
-- For e2e tests, always use the Page Object Model pattern to improve maintainability and readability.
 
 ## Components
 
@@ -50,3 +53,8 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 ## E2E Tests
 
 - Always use `npm run e2e` to run end-to-end tests.
+- Always use the Page Object Model pattern to improve maintainability and readability.
+
+## Application Overview
+
+This is an Angular CRM application built with TypeScript. It utilizes Playwright for end-to-end testing and Vitest for unit testing.
